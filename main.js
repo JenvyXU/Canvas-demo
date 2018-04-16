@@ -3,43 +3,84 @@ var context = yyy.getContext('2d');
 var eraserEnable=false
 
 autoSetCanvasSize(yyy)
-listenToMouse(yyy)
+listenToUser(yyy)
 
-function listenToMouse(canvas){
+function listenToUser(canvas){
   var using=false
   var lastPoint={x:undefined,y:undefined}
-  canvas.onmousedown=function(aaa){
-    using=true
-    var x=aaa.clientX
-    var y=aaa.clientY
-    if(eraserEnable){
-      context.clearRect(x-10,y-10,20,20)
-    }else{
-      lastPoint={x:x,y:y}
-      drawCircle(x,y,1)
-    }
-  }
-  
-  canvas.onmousemove=function(aaa){
-    var x=aaa.clientX
-    var y=aaa.clientY
-    var newPoint={x:x, y:y}
-    if(!using){return}
+  //特性检测
+  if(document.body.ontouchstart!==undefined){
+    //在触屏设备上使用
     
-    if(eraserEnable){
-        context.clearRect(x-5,y-5,10,10)
-    
-    }else{
-
-        drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
-        lastPoint=newPoint
-
+    canvas.ontouchstart=function(aaa){
+      using=true
+        var x=aaa.touches[0].clientX
+        var y=aaa.touches[0].clientY
+        if(eraserEnable){
+          context.clearRect(x-10,y-10,20,20)
+        }else{
+          lastPoint={x:x,y:y}
+          drawCircle(x,y,1)
+        }
     }
+      canvas.ontouchmove=function(aaa){
+        var x=aaa.touches[0].clientX
+        var y=aaa.touches[0].clientY
+
+        var newPoint={x:x, y:y}
+        if(!using){return}     
+        if(eraserEnable){
+            context.clearRect(x-5,y-5,10,10)   
+            console.log(x,y)    
+        }else{
+
+            drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
+            lastPoint=newPoint
+        }
+      }
+    canvas.ontouchend=function(){
+      using=false
+    }
+  }else{
+//在PC上使用的程序
+
+      canvas.onmousedown=function(aaa){
+        console.log('在PC上使用的程序')
+        using=true
+        var x=aaa.clientX
+        var y=aaa.clientY
+        if(eraserEnable){
+          context.clearRect(x-10,y-10,20,20)
+        }else{
+          lastPoint={x:x,y:y}
+          drawCircle(x,y,1)
+        }
+      }
+      
+      canvas.onmousemove=function(aaa){
+        var x=aaa.clientX
+        var y=aaa.clientY
+        var newPoint={x:x, y:y}
+        if(!using){return}
+        
+        if(eraserEnable){
+            context.clearRect(x-5,y-5,10,10)
+        
+        }else{
+
+            drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
+            lastPoint=newPoint
+
+        }
+      }
+      canvas.onmouseup=function(aaa){
+        using=false
+      }
+    }
+
   }
-  canvas.onmouseup=function(aaa){
-    using=false
-  }
-}
+
+
 /*****************/
   
 function drawCircle(x,y,radius){

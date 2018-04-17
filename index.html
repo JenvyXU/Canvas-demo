@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body> 
-  <canvas id="xxx" width=300 height=300 ></canvas>
+  <canvas id="canvas" width=300 height=300 ></canvas>
   <div class="actions">
   	<svg id="pen" class="icon active">
     	<use xlink:href="#icon-pen1"></use>
@@ -15,13 +15,24 @@
 	<svg id="eraser" class="icon">
     	<use xlink:href="#icon-eraser1"></use>
 	</svg>
+	<svg id="clear" class="clear">
+    	<use xlink:href="#icon-delete"></use>
+	</svg>
+	<svg id="download" class="download">
+    	<use xlink:href="#icon-download"></use>
+	</svg>
   </div>
   <ol class="colors">
   	<li id="red" class="red"></li>
   	<li id="green" class="green"></li>
-  	<li id="blue" class="blue"></li>
+  	<li id="blue" class="blue active"></li>
+  </ol>
+  <ol class="sizes">
+  	<li id="thin" class="thin"></li>
+  	<li id="middle" class="middle active"></li>
+  	<li id="thick" class="thick"></li>
   </ol>
 </body>
 <script src="./main.js"></script>
-<script src="//at.alicdn.com/t/font_631244_7zgax1jvegx8ncdi.js"></script>
+<script src="//at.alicdn.com/t/font_631244_ohqn2r7bb3a98uxr.js"></script>
 </html>

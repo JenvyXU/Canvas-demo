@@ -1,6 +1,9 @@
-#xxx{
+#canvas{
   background:white;
-  sdisplay:block;
+  display:block;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 ul,ol{
 	list-style: none;
@@ -54,4 +57,35 @@ ul,ol{
  .colors>li.active{
  	border: 3px solid #333333;
  	transform: scale(1.3);
+ }
+ body{
+ 	overflow: hidden;
+ }
+ .sizes{
+ 	position: fixed;
+ 	left: 2px;
+ 	top: 205px;
+
+ }
+ .sizes>li{
+ 	margin:25px;
+ 	transition: all 0.1s;
+ }
+ .sizes>.thin{
+ 	height:2px;
+ 	width: 25px;
+ 	background-color: black;
+ }
+  .sizes>.middle{
+ 	height:4px;
+ 	width: 25px;
+ 	background: black;
+ }
+ .sizes>.thick{
+ 	height:8px;
+ 	width: 25px;
+ 	background: black;
+ }
+ .sizes>li.active{
+ 	transform: translateX(-8px);
  }

@@ -1,9 +1,11 @@
-var yyy = document.getElementById('xxx');
-var context = yyy.getContext('2d');
+var canvas= document.getElementById('canvas');
+var context = canvas.getContext('2d');
 var eraserEnable=false
-
-autoSetCanvasSize(yyy)
-listenToUser(yyy)
+var lineWidth=4
+autoSetCanvasSize(canvas)
+listenToUser(canvas)
+context.fillStyle='blue'
+context.strokeStyle='blue'
 
 function listenToUser(canvas){
   var using=false
@@ -20,7 +22,7 @@ function listenToUser(canvas){
           context.clearRect(x-10,y-10,20,20)
         }else{
           lastPoint={x:x,y:y}
-          drawCircle(x,y,1)
+          drawCircle(x,y,(lineWidth/2))
         }
     }
       canvas.ontouchmove=function(aaa){
@@ -30,8 +32,7 @@ function listenToUser(canvas){
         var newPoint={x:x, y:y}
         if(!using){return}     
         if(eraserEnable){
-            context.clearRect(x-5,y-5,10,10)   
-            console.log(x,y)    
+            context.clearRect(x-10,y-10,20,20)   
         }else{
 
             drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
@@ -45,7 +46,6 @@ function listenToUser(canvas){
 //在PC上使用的程序
 
       canvas.onmousedown=function(aaa){
-        console.log('在PC上使用的程序')
         using=true
         var x=aaa.clientX
         var y=aaa.clientY
@@ -53,7 +53,7 @@ function listenToUser(canvas){
           context.clearRect(x-10,y-10,20,20)
         }else{
           lastPoint={x:x,y:y}
-          drawCircle(x,y,1)
+          drawCircle(x,y,(lineWidth/2))
         }
       }
       
@@ -64,7 +64,7 @@ function listenToUser(canvas){
         if(!using){return}
         
         if(eraserEnable){
-            context.clearRect(x-5,y-5,10,10)
+            context.clearRect(x-10,y-10,20,20)
         
         }else{
 
@@ -91,7 +91,7 @@ function drawCircle(x,y,radius){
 function drawLine(x1,y1,x2,y2){
   context.beginPath()
   context.moveTo(x1,y1)//起点
-  context.lineWidth=5
+  context.lineWidth=lineWidth
   context.lineTo(x2,y2)//终点
   context.stroke()
   context.closePath()
@@ -107,6 +107,9 @@ function autoSetCanvasSize(canvas){
   var pageHeight=document.documentElement.clientHeight
   canvas.width=pageWidth
   canvas.height=pageHeight
+  context.fillStyle='white'
+  context.fillRect(0,0,pageWidth,pageHeight)
+
   }
 }
 
@@ -142,4 +145,32 @@ green.onclick=function(){
   context.fillStyle='green';
   context.strokeStyle='green';
 }
-blue.click()
+thin.onclick=function(){
+  lineWidth=2
+  thin.classList.add('active')
+  middle.classList.remove('active')
+  thick.classList.remove('active')
+}
+middle.onclick=function(){
+  lineWidth=4
+  middle.classList.add('active')
+  thin.classList.remove('active')
+  thick.classList.remove('active')
+}
+thick.onclick=function(){
+  lineWidth=8
+  thick.classList.add('active')
+  middle.classList.remove('active')
+  thin.classList.remove('active')
+}
+clear.onclick=function(){
+  context.clearRect(0,0,canvas.width,canvas.height)
+}
+download.onclick=function(){
+  var url=canvas.toDataURL("image/png")
+  var a=document.createElement('a')
+  a.href=url
+  a.download='myPainting'
+  a.target ='_blank'
+  a.click()
+}

@@ -85,13 +85,11 @@ function listenToUser(canvas){
   
 function drawCircle(x,y,radius){
   context.beginPath()
-  context.fillStyle='black'
   context.arc(x,y,radius,0,Math.PI*2)
   context.fill()
 }
 function drawLine(x1,y1,x2,y2){
   context.beginPath()
-  context.strokeStyle='black'
   context.moveTo(x1,y1)//起点
   context.lineWidth=5
   context.lineTo(x2,y2)//终点
@@ -114,9 +112,34 @@ function autoSetCanvasSize(canvas){
 
 eraser.onclick=function(){
   eraserEnable=true
-  actions.className='actions x'
+  eraser.classList.add('active')
+  pen.classList.remove('active')
 }
-brush.onclick=function(){
+pen.onclick=function(){
   eraserEnable=false
-  actions.className='actions'
+  pen.classList.add('active')
+  eraser.classList.remove('active')
 }
+red.onclick=function(){
+  red.classList.add('active')
+  blue.classList.remove('active')
+  green.classList.remove('active')
+
+  context.fillStyle='red';
+  context.strokeStyle='red';
+}
+blue.onclick=function(){
+  blue.classList.add('active')
+  red.classList.remove('active')
+  green.classList.remove('active')
+  context.fillStyle='blue';
+  context.strokeStyle='blue';
+}
+green.onclick=function(){
+  green.classList.add('active')
+  blue.classList.remove('active')
+  red.classList.remove('active')
+  context.fillStyle='green';
+  context.strokeStyle='green';
+}
+blue.click()

@@ -9,83 +9,171 @@ ul,ol{
 	list-style: none;
 	padding: 0;
 }
+body{
+	overflow: hidden;
+}
 *{margin:0;padding: 0px}
-.actions{
-  position:fixed;
-  top:0;
-  left:0;
-  padding: 20px;
-}
-.actions>svg{
-	width:2em;
-	height:2em;
-	margin:0 10px;
-	transition: all 0.3s;
-}
-.actions>svg.active{
-	color: red;
-	transform: scale(1.2);
-}
 .icon {
    width: 1em; height: 1em;
    vertical-align: -0.15em;
    fill: currentColor;
     overflow: hidden;
  }
+.tools{
+	background: #EBECEB;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-left: auto;
+	margin-right: auto;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	z-index: 1;
+	padding: 20px 0;
+	width: 650px;
+}
+.tools>.actions{
+	display: flex;
+}
+.tools>.actions .icon{
+	width:1.8em;
+	height:1.8em;
+}
+.tools>.actions>li{
+	width: 40px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 4px;
+	transition: all 0.3s;
+	margin: 0 2px;
+	background: #CCCAC9;
+	border: 2px solid transparent;
+}
+.tools>.actions>li.active{
+	background: #93C8FF;
+}
+.tools>.actions>li:hover{
+	cursor: pointer;
+	border: 2px solid #93C8FF;
+	
+ }
  .colors{
- 	position: fixed;
- 	top: 70px;
- 	left:12px;
- }
- .colors>li{
- 	width:20px;
- 	height: 20px;
- 	border-radius: 50%;
- 	margin:15px;
- 	border: 3px solid transparent;
- 	transition: all 0.3s;
- }
-.colors>li.red{
- 	background: red;
- }
-.colors>li.blue{
-   background: blue;
-}
-.colors>li.green{
-    background: green;
-}
- .colors>li.active{
- 	border: 3px solid #333333;
- 	transform: scale(1.3);
- }
- body{
- 	overflow: hidden;
- }
- .sizes{
- 	position: fixed;
- 	left: 2px;
- 	top: 205px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	background: #CBCCCB;
+	margin: 0 10px 0 10px;
+	border-radius: 5px;
+	padding: 6px 2px;
 
  }
+ .colors>.allColor{
+	display: flex;
+	width: 100px;
+	justify-content: center;
+	flex-wrap: wrap;
+	background: #CBCCCB;
+	padding: 4px;
+	margin: 0 10px 0 10px;
+	border-radius: 5px;
+ }
+ .colors>.allColor>li{
+ 	width:25px;
+ 	height: 25px;
+	margin:2px;
+	border-radius: 2px;
+ 	border: 2px solid transparent;
+ 	transition: all 0.3s;
+ }
+ .colors>.allColor>li:hover{
+	border: 2px solid #93C8FF;
+ }
+ .colors>.currentColor{
+	 width: 40px;
+	 height: 40px;
+	 margin-right: 16px;
+	 border-radius: 50%;
+ }
+ .colors>.allColor>li.color1{
+ 	background: black;
+ }
+ .colors>.allColor>li.color2{
+   background: blue;
+}
+.colors>.allColor>li.color3{
+    background: red;
+}
+.colors>.allColor>li.color4{
+    background: #549B77;
+}
+.colors>.allColor>li.color5{
+    background: #FEAA39;
+}
+.colors>.allColor>li.color6{
+    background: #CD2256;
+}
+.colors>.allColor>li.active{
+
+ }
+
+ .currentColor.color1{
+	background: black;
+}
+.currentColor.color2{
+  background: blue;
+}
+.currentColor.color3{
+   background: red;
+}
+.currentColor.color4{
+   background: #549B77;
+}
+.currentColor.color5{
+   background: #FEAA39;
+}
+.currentColor.color6{
+   background: #CD2256;
+}
+
+ .sizes{
+	 display: flex;
+ }
+
  .sizes>li{
- 	margin:25px;
- 	transition: all 0.1s;
+	margin:0 2px;
+	width: 40px;
+	height: 40px;
+	border-radius: 4px;
+	transition: all 0.1s;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #CCCAC9;
+	border: 2px solid transparent;
+ }
+ .sizes>li:hover{
+	border: 2px solid #93C8FF;
+	background: #CCCAC9;
+	cursor: pointer;
+ }
+ .sizes>li .icon{
+	width:1.8em;
+	height:1.8em;
+	padding: 5px;
  }
  .sizes>.thin{
- 	height:2px;
- 	width: 25px;
- 	background-color: black;
+ 
  }
-  .sizes>.middle{
- 	height:4px;
- 	width: 25px;
- 	background: black;
+.sizes>.middle{
+ 
  }
  .sizes>.thick{
- 	height:8px;
- 	width: 25px;
- 	background: black;
+
  }
  .sizes>li.active{
- 	transform: translateX(-8px);
+	background: #94C9FF;
  }

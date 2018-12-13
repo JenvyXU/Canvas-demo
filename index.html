@@ -7,32 +7,65 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body> 
+	<div class="tools">
+		<ul class="actions">
+			<li id="pen" class="active">
+					<svg class="icon">
+						<use xlink:href="#icon-nib"></use>
+					</svg>
+			</li>
+			<li id="eraser">
+			<svg class="icon">
+					<use xlink:href="#icon-rubber"></use>
+			</svg>			
+			</li>
+			<li id="clear">
+			<svg class="clear icon">
+					<use xlink:href="#icon-decorate"></use>
+			</svg>			
+			</li>
+			<li id="download">
+			<svg class="download icon">
+					<use xlink:href="#icon-download1"></use>
+			</svg>			
+			</li>
+		</ul>
+		<ol class="colors">
+			<div class="allColor">
+				<li id="color1" class="color1"></li>
+				<li id="color2" class="color2"></li>
+				<li id="color3" class="color3"></li>
+				<li id="color4" class="color4"></li>
+				<li id="color5" class="color5"></li>
+				<li id="color6" class="color6 active"></li>				
+			</div>
+			<div class="currentColor color1" id="currentColor">
+
+			</div>
+
+		</ol>
+		<ol class="sizes">
+			<li id="thin" class="thin">
+					<svg class="icon">
+							<use xlink:href="#icon-point"></use>
+					</svg>
+			</li>
+			<li id="middle" class="middle active">
+					<svg class="icon">
+							<use xlink:href="#icon-point2"></use>
+					</svg>
+			</li>
+			<li id="thick" class="thick">
+					<svg class="icon">
+							<use xlink:href="#icon-point3"></use>
+					</svg>
+			</li>
+		</ol>
+
+	</div>
   <canvas id="canvas" width=300 height=300 ></canvas>
-  <div class="actions">
-  	<svg id="pen" class="icon active">
-    	<use xlink:href="#icon-pen1"></use>
-	</svg>
-	<svg id="eraser" class="icon">
-    	<use xlink:href="#icon-eraser1"></use>
-	</svg>
-	<svg id="clear" class="clear">
-    	<use xlink:href="#icon-delete"></use>
-	</svg>
-	<svg id="download" class="download">
-    	<use xlink:href="#icon-download"></use>
-	</svg>
-  </div>
-  <ol class="colors">
-  	<li id="red" class="red"></li>
-  	<li id="green" class="green"></li>
-  	<li id="blue" class="blue active"></li>
-  </ol>
-  <ol class="sizes">
-  	<li id="thin" class="thin"></li>
-  	<li id="middle" class="middle active"></li>
-  	<li id="thick" class="thick"></li>
-  </ol>
+
 </body>
 <script src="./main.js"></script>
-<script src="//at.alicdn.com/t/font_631244_ohqn2r7bb3a98uxr.js"></script>
+<script src="//at.alicdn.com/t/font_631244_4uxbu6azbg5.js"></script>
 </html>

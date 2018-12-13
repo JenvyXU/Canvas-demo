@@ -128,18 +128,133 @@ function autoSetCanvasSize(canvas){
     context.fillRect(0,0,pageWidth,pageHeight)
   }
 }
-
+pen.onclick=function(){
+  console.log(2)
+  eraserEnable=false
+  pen.classList.add('active')
+  eraser.classList.remove('active')
+}
 eraser.onclick=function(){
   eraserEnable=true
   eraser.classList.add('active')
   pen.classList.remove('active')
 }
-pen.onclick=function(){
-  eraserEnable=false
-  pen.classList.add('active')
-  eraser.classList.remove('active')
+
+
+var currentColor=document.getElementById('currentColor')
+var colors=['color1','color2','color3','color4','color5','color6']
+
+
+color1.onclick=function(){
+  color1.classList.add('active')
+  color2.classList.remove('active')
+  color3.classList.remove('active')
+  color4.classList.remove('active')
+  color5.classList.remove('active')
+  color6.classList.remove('active')
+  colors.map(function(color){
+    if(color!=='color1'){
+      currentColor.classList.remove(color)
+    } 
+  })
+  currentColor.classList.add('color1')
+  context.fillStyle='black';
+  context.strokeStyle='black';
 }
-red.onclick=function(){
+color2.onclick=function(){
+  color2.classList.add('active')
+  color1.classList.remove('active')
+  color3.classList.remove('active')
+  color4.classList.remove('active')
+  color5.classList.remove('active')
+  color6.classList.remove('active')
+  colors.map(function(color){
+    if(color!=='color2'){
+      currentColor.classList.remove(color)
+    } 
+  })
+  currentColor.classList.add('color2')
+  context.fillStyle='blue';
+  context.strokeStyle='blue';
+}
+color3.onclick=function(){
+  color3.classList.add('active')
+  color2.classList.remove('active')
+  color1.classList.remove('active')
+  color4.classList.remove('active')
+  color5.classList.remove('active')
+  color6.classList.remove('active')
+  colors.map(function(color){
+    if(color!=='color3'){
+      currentColor.classList.remove(color)
+    } 
+  })
+  currentColor.classList.add('color3')
+  context.fillStyle='red';
+  context.strokeStyle='red';
+}
+color4.onclick=function(){
+  color4.classList.add('active')
+  color2.classList.remove('active')
+  color3.classList.remove('active')
+  color1.classList.remove('active')
+  color5.classList.remove('active')
+  color6.classList.remove('active')
+  colors.map(function(color){
+    if(color!=='color4'){
+      currentColor.classList.remove(color)
+    } 
+  })
+  currentColor.classList.add('color4')
+  context.fillStyle='#549B77';
+  context.strokeStyle='#549B77';
+}
+color5.onclick=function(){
+  color5.classList.add('active')
+  color2.classList.remove('active')
+  color3.classList.remove('active')
+  color4.classList.remove('active')
+  color1.classList.remove('active')
+  color6.classList.remove('active')
+  colors.map(function(color){
+    if(color!=='color5'){
+      currentColor.classList.remove(color)
+    } 
+  })
+  currentColor.classList.add('color5')
+  context.fillStyle='#FEAA39';
+  context.strokeStyle='#FEAA39';
+}
+color6.onclick=function(){
+  color6.classList.add('active')
+  color2.classList.remove('active')
+  color3.classList.remove('active')
+  color4.classList.remove('active')
+  color5.classList.remove('active')
+  color1.classList.remove('active')
+  colors.map(function(color){
+    if(color!=='color6'){
+      currentColor.classList.remove(color)
+    } 
+  })
+  currentColor.classList.add('color6')
+
+  context.fillStyle='#CD2256';
+  context.strokeStyle='#CD2256';
+}
+
+
+
+
+
+
+
+
+
+
+/**
+ *
+ * red.onclick=function(){
   red.classList.add('active')
   blue.classList.remove('active')
   green.classList.remove('active')
@@ -160,7 +275,10 @@ green.onclick=function(){
   red.classList.remove('active')
   context.fillStyle='green';
   context.strokeStyle='green';
-}
+} 
+ * 
+ */
+
 thin.onclick=function(){
   lineWidth=2
   thin.classList.add('active')

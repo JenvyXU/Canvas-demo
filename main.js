@@ -2,10 +2,15 @@ var canvas= document.getElementById('canvas');
 var context = canvas.getContext('2d');
 var eraserEnable=false
 var lineWidth=4
-autoSetCanvasSize(canvas)
-listenToUser(canvas)
+var points=[]
+var beginPoint=null
+//初始化画笔
 context.fillStyle='blue'
 context.strokeStyle='blue'
+context.lineJoin = 'round';
+context.lineCap = 'round';
+autoSetCanvasSize(canvas)
+listenToUser(canvas)
 
 function listenToUser(canvas){
   var using=false
@@ -13,30 +18,36 @@ function listenToUser(canvas){
   //特性检测
   if(document.body.ontouchstart!==undefined){
     //在触屏设备上使用
-    
-    canvas.ontouchstart=function(aaa){
+    canvas.ontouchstart=function(pos){
       using=true
-        var x=aaa.touches[0].clientX
-        var y=aaa.touches[0].clientY
-        if(eraserEnable){
-          context.clearRect(x-10,y-10,20,20)
-        }else{
-          lastPoint={x:x,y:y}
-          drawCircle(x,y,(lineWidth/2))
-        }
+      var x=pos.clientX
+      var y=pos.clientY    
+      points.push[{x,y}]
+      if(eraserEnable){
+        context.clearRect(x-10,y-10,20,20)
+      }else{
+        beginPoint ={x:x,y:y}
+        drawCircle(x,y,(lineWidth/2))
+      }
     }
-      canvas.ontouchmove=function(aaa){
-        var x=aaa.touches[0].clientX
-        var y=aaa.touches[0].clientY
-
-        var newPoint={x:x, y:y}
-        if(!using){return}     
+      canvas.ontouchmove=function(pos){
+        var x=pos.clientX
+        var y=pos.clientY
+        points.push({x,y})
+        if(!using){return}
         if(eraserEnable){
-            context.clearRect(x-10,y-10,20,20)   
+            context.clearRect(x-10,y-10,20,20)
         }else{
-
-            drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
-            lastPoint=newPoint
+            if (points.length > 3) {
+              const lastTwoPoints = points.slice(-2);
+              const controlPoint = lastTwoPoints[0];
+              const endPoint = {
+                  x: (lastTwoPoints[0].x + lastTwoPoints[1].x) / 2,
+                  y: (lastTwoPoints[0].y + lastTwoPoints[1].y) / 2,
+              }
+              drawLine(beginPoint, controlPoint, endPoint);
+              beginPoint = endPoint;
+          }
         }
       }
     canvas.ontouchend=function(){
@@ -45,41 +56,46 @@ function listenToUser(canvas){
   }else{
 //在PC上使用的程序
 
-      canvas.onmousedown=function(aaa){
+      canvas.onmousedown=function(pos){
         using=true
-        var x=aaa.clientX
-        var y=aaa.clientY
+        var x=pos.clientX
+        var y=pos.clientY
+        
+        points.push[{x,y}]
         if(eraserEnable){
           context.clearRect(x-10,y-10,20,20)
         }else{
-          lastPoint={x:x,y:y}
+          beginPoint ={x:x,y:y}
           drawCircle(x,y,(lineWidth/2))
         }
       }
       
-      canvas.onmousemove=function(aaa){
-        var x=aaa.clientX
-        var y=aaa.clientY
-        var newPoint={x:x, y:y}
+      canvas.onmousemove=function(pos){
+        var x=pos.clientX
+        var y=pos.clientY
+        points.push({x,y})
         if(!using){return}
-        
         if(eraserEnable){
             context.clearRect(x-10,y-10,20,20)
-        
         }else{
-
-            drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y)
-            lastPoint=newPoint
-
+            if (points.length > 3) {
+              const lastTwoPoints = points.slice(-2);
+              const controlPoint = lastTwoPoints[0];
+              const endPoint = {
+                  x: (lastTwoPoints[0].x + lastTwoPoints[1].x) / 2,
+                  y: (lastTwoPoints[0].y + lastTwoPoints[1].y) / 2,
+              }
+              drawLine(beginPoint, controlPoint, endPoint);
+              beginPoint = endPoint;
+          }
         }
       }
-      canvas.onmouseup=function(aaa){
+      canvas.onmouseup=function(pos){
         using=false
       }
     }
 
   }
-
 
 /*****************/
   
@@ -88,28 +104,28 @@ function drawCircle(x,y,radius){
   context.arc(x,y,radius,0,Math.PI*2)
   context.fill()
 }
-function drawLine(x1,y1,x2,y2){
-  context.beginPath()
-  context.moveTo(x1,y1)//起点
+
+function drawLine(beginPoint, controlPoint, endPoint) {
+  context.beginPath();
+  context.moveTo(beginPoint.x, beginPoint.y);
   context.lineWidth=lineWidth
-  context.lineTo(x2,y2)//终点
-  context.stroke()
-  context.closePath()
+  context.quadraticCurveTo(controlPoint.x, controlPoint.y, endPoint.x, endPoint.y);
+  context.stroke();
+  context.closePath();
 }
 
 function autoSetCanvasSize(canvas){
-  setCanvasSize()
-  window.onresize=function(){
+    setCanvasSize()
+    window.onresize=function(){
     setCanvasSize()
   }
   function setCanvasSize(){
-  var pageWidth=document.documentElement.clientWidth
-  var pageHeight=document.documentElement.clientHeight
-  canvas.width=pageWidth
-  canvas.height=pageHeight
-  context.fillStyle='white'
-  context.fillRect(0,0,pageWidth,pageHeight)
-
+    var pageWidth=document.documentElement.clientWidth
+    var pageHeight=document.documentElement.clientHeight
+    canvas.width=pageWidth
+    canvas.height=pageHeight
+    context.fillStyle='white'
+    context.fillRect(0,0,pageWidth,pageHeight)
   }
 }
 

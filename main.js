@@ -11,6 +11,12 @@ context.lineJoin = 'round';
 context.lineCap = 'round';
 autoSetCanvasSize(canvas)
 listenToUser(canvas)
+setTimeout(() => {
+  var tools=document.querySelector('.tools')
+  tools.classList.remove('show')
+}, 3000);
+
+
 
 function listenToUser(canvas){
   var using=false

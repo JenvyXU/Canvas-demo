@@ -11,6 +11,7 @@ ul,ol{
 }
 body{
 	overflow: hidden;
+	min-width: 800px;
 }
 *{margin:0;padding: 0px}
 .icon {
@@ -32,6 +33,15 @@ body{
 	z-index: 1;
 	padding: 20px 0;
 	width: 650px;
+	margin-top: -106px;
+	transition: .5s;
+}
+.tools.show{
+	margin-top: 0px;
+}
+.tools:hover{
+	margin-top: 0px;
+	
 }
 .tools>.actions{
 	display: flex;

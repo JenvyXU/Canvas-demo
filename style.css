@@ -21,8 +21,8 @@ body{
     overflow: hidden;
  }
 .tools{
-	background: #EBECEB;
 	position: relative;
+	background: #EBECEB;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -40,16 +40,20 @@ body{
 	margin-top: 0px;
 }
 .tools:hover{
-	margin-top: 0px;
-	
+	margin-top: 0px;	
 }
 .tools>.actions{
 	display: flex;
 }
 .tools>.actions .icon{
-	width:1.8em;
-	height:1.8em;
+	width:28px;
+	height:28px;
 }
+.sizes>li .icon{
+	width:28px;
+	height:28px;
+	padding: 5px;
+ }
 .tools>.actions>li{
 	width: 40px;
 	height: 40px;
@@ -79,7 +83,6 @@ body{
 	margin: 0 10px 0 10px;
 	border-radius: 5px;
 	padding: 6px 2px;
-
  }
  .colors>.allColor{
 	display: flex;
@@ -170,20 +173,57 @@ body{
 	background: #CCCAC9;
 	cursor: pointer;
  }
- .sizes>li .icon{
-	width:1.8em;
-	height:1.8em;
-	padding: 5px;
- }
- .sizes>.thin{
- 
- }
-.sizes>.middle{
- 
- }
- .sizes>.thick{
-
- }
  .sizes>li.active{
 	background: #94C9FF;
  }
+ /* rem = pageWidht/20 */
+@media (min-width:320px) and (max-width:500px){
+	body{
+		min-width: 100%;
+	}
+	.tools{
+		width: 100%;
+		padding-bottom: 6.25rem;
+		border-bottom-right-radius: 0.62rem;
+		border-bottom-left-radius: 0.62rem;
+		position: relative;
+		margin-top: -8rem;
+	}
+	.tools>.actions{
+		justify-content: center;
+	}
+	.tools>.actions .icon{
+		width:1.8rem;
+		height:1.8rem;
+	}
+	.tools>.actions>li,
+	.tools>.sizes>li{
+		width:2.2rem;
+		height:2.2rem;
+	}
+	 .tools>.colors{
+		position: absolute;
+		margin: auto;
+		top: 4.5rem;
+		padding: 0.38rem 2px;
+	}
+	.tools>.colors>.allColor{
+		flex-wrap: nowrap;
+		width: auto;
+	}
+	.tools>.colors>.allColor>li{
+		width:1.8rem;
+		height:1.8rem;
+		margin:0.1rem;
+	}
+	.colors>.currentColor {
+		width: 2.5rem;
+		height: 2.5rem;
+		margin-right: 1rem;
+		border-radius: 50%;
+	}
+	.tools>.sizes{
+		justify-content: center;
+	}
+
+}

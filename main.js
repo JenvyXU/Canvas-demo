@@ -1,50 +1,56 @@
-var canvas= document.getElementById('canvas');
-var context = canvas.getContext('2d');
+var canvas= document.getElementById('canvas')
+var context = canvas.getContext('2d')
 var eraserEnable=false
 var lineWidth=4
 var points=[]
 var beginPoint=null
-//初始化画笔
-context.fillStyle='blue'
-context.strokeStyle='blue'
-context.lineJoin = 'round';
-context.lineCap = 'round';
+var pageWidth=window.innerWidth
+var colors=['color1','color2','color3','color4','color5','color6']
+
+//移动端设置
+document.write('<style>html{font-size:'+pageWidth/20+'px;}</style>')
+
 autoSetCanvasSize(canvas)
 listenToUser(canvas)
 setTimeout(() => {
   var tools=document.querySelector('.tools')
   tools.classList.remove('show')
-}, 3000);
-
+}, 3000)
 
 
 function listenToUser(canvas){
   var using=false
-  var lastPoint={x:undefined,y:undefined}
+  context.fillStyle='black'
+  context.fillStyle="black"
+  context.lineJoin = 'round'
+  context.lineCap = 'round'
   //特性检测
   if(document.body.ontouchstart!==undefined){
     //在触屏设备上使用
     canvas.ontouchstart=function(pos){
       using=true
-      var x=pos.clientX
-      var y=pos.clientY    
-      points.push[{x,y}]
+      var x=pos.targetTouches[0].clientX
+      var y=pos.targetTouches[0].clientY
       if(eraserEnable){
         context.clearRect(x-10,y-10,20,20)
       }else{
-        beginPoint ={x:x,y:y}
+        points.push[{x,y}]
+        beginPoint={x:x,y:y}  
         drawCircle(x,y,(lineWidth/2))
       }
     }
-      canvas.ontouchmove=function(pos){
-        var x=pos.clientX
-        var y=pos.clientY
-        points.push({x,y})
+    canvas.ontouchmove=function(pos){
+        var x=pos.targetTouches[0].clientX
+        var y=pos.targetTouches[0].clientY
         if(!using){return}
+        points.push({x,y}) 
+        if(points.length>3){
+          points.shift[0]  
+        }
         if(eraserEnable){
             context.clearRect(x-10,y-10,20,20)
         }else{
-            if (points.length > 3) {
+            if (points.length >3) {        
               const lastTwoPoints = points.slice(-2);
               const controlPoint = lastTwoPoints[0];
               const endPoint = {
@@ -52,21 +58,31 @@ function listenToUser(canvas){
                   y: (lastTwoPoints[0].y + lastTwoPoints[1].y) / 2,
               }
               drawLine(beginPoint, controlPoint, endPoint);
-              beginPoint = endPoint;
+              beginPoint = endPoint;    
           }
         }
+    }
+    canvas.ontouchend=function(pos){
+      if(!using){return}
+      var x=pos.changedTouches[0].clientX
+      var y=pos.changedTouches[0].clientY
+      points.push({x, y});
+      if (points.length > 3&&eraserEnable===false) {
+        const lastTwoPoints = points.slice(-2);
+        const controlPoint = lastTwoPoints[0];
+        const endPoint = lastTwoPoints[1];
+        drawLine(beginPoint, controlPoint, endPoint);
       }
-    canvas.ontouchend=function(){
+      beginPoint = null;
+      points = [];
       using=false
     }
   }else{
 //在PC上使用的程序
-
-      canvas.onmousedown=function(pos){
+    canvas.onmousedown=function(pos){
         using=true
         var x=pos.clientX
         var y=pos.clientY
-        
         points.push[{x,y}]
         if(eraserEnable){
           context.clearRect(x-10,y-10,20,20)
@@ -74,9 +90,8 @@ function listenToUser(canvas){
           beginPoint ={x:x,y:y}
           drawCircle(x,y,(lineWidth/2))
         }
-      }
-      
-      canvas.onmousemove=function(pos){
+    }
+    canvas.onmousemove=function(pos){
         var x=pos.clientX
         var y=pos.clientY
         points.push({x,y})
@@ -95,12 +110,23 @@ function listenToUser(canvas){
               beginPoint = endPoint;
           }
         }
-      }
-      canvas.onmouseup=function(pos){
-        using=false
-      }
     }
-
+    canvas.onmouseup=function(pos){
+      if(!using){return}
+      var x=pos.clientX
+      var y=pos.clientY
+      points.push({x, y});
+      if (points.length > 3&&eraserEnable===false) {
+        const lastTwoPoints = points.slice(-2);
+        const controlPoint = lastTwoPoints[0];
+        const endPoint = lastTwoPoints[1];
+        drawLine(beginPoint, controlPoint, endPoint);
+      }
+      beginPoint = null;
+      points = [];
+      using=false
+    }
+  }
   }
 
 /*****************/
@@ -110,7 +136,6 @@ function drawCircle(x,y,radius){
   context.arc(x,y,radius,0,Math.PI*2)
   context.fill()
 }
-
 function drawLine(beginPoint, controlPoint, endPoint) {
   context.beginPath();
   context.moveTo(beginPoint.x, beginPoint.y);
@@ -119,7 +144,6 @@ function drawLine(beginPoint, controlPoint, endPoint) {
   context.stroke();
   context.closePath();
 }
-
 function autoSetCanvasSize(canvas){
     setCanvasSize()
     window.onresize=function(){
@@ -135,7 +159,6 @@ function autoSetCanvasSize(canvas){
   }
 }
 pen.onclick=function(){
-  console.log(2)
   eraserEnable=false
   pen.classList.add('active')
   eraser.classList.remove('active')
@@ -145,12 +168,6 @@ eraser.onclick=function(){
   eraser.classList.add('active')
   pen.classList.remove('active')
 }
-
-
-var currentColor=document.getElementById('currentColor')
-var colors=['color1','color2','color3','color4','color5','color6']
-
-
 color1.onclick=function(){
   color1.classList.add('active')
   color2.classList.remove('active')
@@ -248,43 +265,6 @@ color6.onclick=function(){
   context.fillStyle='#CD2256';
   context.strokeStyle='#CD2256';
 }
-
-
-
-
-
-
-
-
-
-
-/**
- *
- * red.onclick=function(){
-  red.classList.add('active')
-  blue.classList.remove('active')
-  green.classList.remove('active')
-
-  context.fillStyle='red';
-  context.strokeStyle='red';
-}
-blue.onclick=function(){
-  blue.classList.add('active')
-  red.classList.remove('active')
-  green.classList.remove('active')
-  context.fillStyle='blue';
-  context.strokeStyle='blue';
-}
-green.onclick=function(){
-  green.classList.add('active')
-  blue.classList.remove('active')
-  red.classList.remove('active')
-  context.fillStyle='green';
-  context.strokeStyle='green';
-} 
- * 
- */
-
 thin.onclick=function(){
   lineWidth=2
   thin.classList.add('active')
